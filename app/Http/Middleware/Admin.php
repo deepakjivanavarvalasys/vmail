@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+
 class Admin
 {
     /**
@@ -16,7 +17,11 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
         
+        
+        if(Auth::user()->role_id == 1)
+        {
         echo "admin";
         return $next($request);
+        }
     }
 }
