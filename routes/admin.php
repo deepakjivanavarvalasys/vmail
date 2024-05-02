@@ -11,7 +11,7 @@ Route::prefix('admin')->middleware('admin')->group(function (){
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('add_roles',[AdminController::class,'addroles']);    
+    Route::get('add_roles',[AdminController::class,'addroles'])->name('add_roles');    
     Route::post('add_roles',[AdminController::class,'submitroles']);    
 
 });
