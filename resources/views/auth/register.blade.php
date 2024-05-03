@@ -27,6 +27,26 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+
+        <!-- Contact  -->
+        <div class="col-md-4">
+            <x-input-label for="contact" :value="__('Contact')" />
+            <x-text-input id="contact" class="block mt-1 w-full" type="tel" name="contact" :value="old('contact')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('contact')" class="mt-2" />
+        </div>
+
+                <!-- Contact  -->
+                <div class="col-md-4">
+                    <select name="roles">
+                        <option selected>-- Select Role Type --</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Manager</option>
+                        <option value="3">EME</option>
+                     </select>
+
+                    <x-input-error :messages="$errors->get('roles')" class="mt-2" />
+                </div>
+        
         
         <!-- Password -->
         <div class="col-md-4">
