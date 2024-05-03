@@ -7,4 +7,7 @@ Route::prefix('manager')->middleware('manager')->group(function(){
     Route::get('showusers', [ManagerController::class, 'showusers'])
     ->name('showusers');    
 
+ 
+    
+
 });
