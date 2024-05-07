@@ -41,6 +41,21 @@ USER_TABLE = $('#table-users').DataTable({
         {
             data: 'email'
         },
+        {
+            data: 'contact'
+        },
+        {
+            render:function(data,type,row) 
+            {
+                if(row.status=='1') {
+                    return 'Active';
+                } else if(row.status=='0') 
+                {
+                    return 'Inactive';
+                }
+            }
+            
+        },
      
 
     ],

@@ -20,6 +20,8 @@
                                                         <th>Name</th>
                                                         <th>Roles</th>
                                                         <th>Email</th>
+                                                        <th>Contact</th>
+                                                        <th>Status</th>
                                                         
                                                     
                                                     </tr>
