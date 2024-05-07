@@ -1,19 +1,27 @@
  
- 
-     
+         <x-app-layout>
+            <x-slot name="header">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    {{ __('Dashboard') }}
+                </h2>
+            </x-slot>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+         <link rel="stylesheet" href="{{asset('css/table_custom.css')}}">
+         <link rel="stylesheet" href="{{asset('plugins/data-tables/css/datatables.min.css')}}">
+
                                         <div class="card-block">
                                             <div class="table-responsive">
-                                                <table id="table-campaigns" class="display table nowrap table-striped table-hover">
+                                                <table id="table-users" class="display table nowrap table-striped table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th>Campaign ID</th>
+                                                    
                                                         <th>Name</th>
-                                                        <th>Users</th>
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
-                                                        <th>Allocation</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
+                                                        <th>Roles</th>
+                                                        <th>Email</th>
+                                                        
+                                                    
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -26,10 +34,11 @@
    
 
  
-    <script src="{{ asset('public/plugins/data-tables/js/datatables.min.js') }}"></script>
-    <script src="{{ asset('public/js/manager/showusers.js?='.time()) }}"></script>
+    <script src="{{ asset('plugins/data-tables/js/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/manager/showusers.js?='.time()) }}"></script>
     
- 
+</x-app-layout>
+
 
 
 

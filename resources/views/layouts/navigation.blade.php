@@ -16,18 +16,33 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+
+                {{-- Admin User --}}
+                @if(Auth::user()->role_id == 1) 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                        {{ __('User') }}
+                        {{ __('Add User') }}
                     </x-nav-link>
                 </div>
+                @endif
 
+                {{-- Admin User --}}
+                @if(Auth::user()->role_id == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('add_roles')" :active="request()->routeIs('add_roles')">
                         {{ __('Roles') }}
                     </x-nav-link>
                 </div>
+                @endif 
 
+                {{-- Manager User --}}
+                @if(Auth::user()->role_id == 2)
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('showusers')" :active="request()->routeIs('showusers')">
+                        {{ __('Show Users') }}
+                    </x-nav-link>
+                </div>
+                @endif
              
 
             </div>

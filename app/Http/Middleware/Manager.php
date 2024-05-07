@@ -19,8 +19,7 @@ class Manager
     {
         if(Auth::user()->role_id == 2 )
         {
-        echo "manager";
-        return $next($request);
+         return $next($request);
         }else
         {   
         Auth::logout();
