@@ -33,7 +33,7 @@
                         </div>
                     <div class="col-md-6">
                         <x-input-label for="asset_name" :value="__('Asset Name')" />
-                        <input class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1" type="text"  id="assettitle[]" name="assettitle[]" value="" />
+                        <input type="text"  id="assettitle[]" name="assettitle[]" value="" />
                     </div>
                     <div class="col-md-6">   
                         <x-input-label for="asset_name" :value="__('Asset File')" />
