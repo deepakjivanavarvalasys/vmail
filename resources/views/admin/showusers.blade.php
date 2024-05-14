@@ -33,7 +33,7 @@
 
  
     <script src="{{ asset('plugins/data-tables/js/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/manager/showusers.js?='.time()) }}"></script>
+    <script src="{{ asset('js/admin/showusers.js?='.time()) }}"></script>
     
 </x-app-layout>
 

@@ -1,18 +1,24 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="{{asset('css/table_custom.css')}}">
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('plugins/data-tables/css/datatables.min.css')}}">
+
+<nav x-data="{ open: false }" class="  dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700" style="background:#353943;">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-16" >
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                <div class="shrink-0 flex items-center " >
+                    <a href="{{ route('dashboard') }} " >
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex ">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
@@ -20,7 +26,7 @@
                 {{-- Admin User --}}
                 @if(Auth::user()->role_id == 1) 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')" class="text-white">
                         {{ __('Add User') }}
                     </x-nav-link>
                 </div>
@@ -29,21 +35,57 @@
                 {{-- Admin User --}}
                 @if(Auth::user()->role_id == 1)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('add_roles')" :active="request()->routeIs('add_roles')">
+                    <x-nav-link :href="route('add_roles')" :active="request()->routeIs('add_roles')" class="text-white">
                         {{ __('Roles') }}
                     </x-nav-link>
                 </div>
                 @endif 
 
                 {{-- Manager User --}}
+                
+                
+                <div class="dropdown hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    
+                      <button class="dropbtn" >Users</button>
+                    
+                    
+                        <div class="dropdown-content">
+                        @if(Auth::user()->role_id == 1)
+                        <a href="{{route('register')}}">Add User</a>
+                        <a href="{{route('showusersadmin')}}">User Details</a>
+                        @endif
+
+                        @if(Auth::user()->role_id == 2 )
+                        <a href="{{route('showusersmanager')}}">User Details</a>
+                        @endif
+                        
+                        </div>
+                    {{-- <x-nav-link :href="route('showusers')" :active="request()->routeIs('showusers')" class="text-white"> --}}
+                        {{-- {{ __('Show Users') }} --}}
+                    {{-- </x-nav-link> --}}
+                </div>
+                
+             
+
+                {{-- Manager User --}}
                 @if(Auth::user()->role_id == 2)
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('showusers')" :active="request()->routeIs('showusers')">
-                        {{ __('Show Users') }}
-                    </x-nav-link>
+                <div class="dropdown hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <button class="dropbtn" >Campaigns</button>
+                    
+                    
+                        <div class="dropdown-content">
+                        <a href="{{Route('addCampaign')}}">Add Campaigns</a>
+                        <a href="#">Campaign Details</a>
+                        <a href="#">Campaign Data Details</a>
+                        <a href="#">Campaign Data Import</a>
+                        <a href="#">Download Unsubscribed</a>
+                        </div>
+                    
+                    
                 </div>
                 @endif
-             
+
+                  
 
             </div>
 

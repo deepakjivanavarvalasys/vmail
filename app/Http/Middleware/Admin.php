@@ -20,7 +20,7 @@ class Admin
         
         if(Auth::user()->role_id == 1 )
         {
-        echo "admin";
+        
         return $next($request);
         }else
         {

@@ -75,4 +75,26 @@ class ManagerController extends Controller
         
         return response()->json($ajaxData);
 }
+
+
+public function add_campaign()
+{
+    
+    return view('manager.add_campaign');
+}
+
+
+
+public function store_campaign(Request $request)
+{
+
+    return dd($request->all());
+
+    $add_campaigns=$request->validate([
+        'campaign_name'=> 'required|string',
+
+    ]);
+    
+    return view('manager.add_campaign');
+}
 }
