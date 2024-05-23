@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\manager;
 use App\Models\User;
+use App\Models\campaign;
+use App\Models\Campaign_poc;
+use App\Models\Asset;
+use App\Models\Client_newsletter_detail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -17,7 +21,7 @@ class ManagerController extends Controller
     {     
         
         
-         $search_data = $request->get('search');
+        $search_data = $request->get('search');
         $searchValue = $search_data['value'];
         $order = $request->get('order');
         $draw = $request->get('draw');
@@ -88,13 +92,83 @@ public function add_campaign()
 public function store_campaign(Request $request)
 {
 
-    return dd($request->all());
-
+ 
     $add_campaigns=$request->validate([
         'campaign_name'=> 'required|string',
-
     ]);
+
+    $add_campaignsAssets=$request->validate([
+        'assettitle.*'=> 'required|string',    
     
+        'assetfile.*'=> 'required|string'
+    ]);
+
+
+    $add_campaignsPocs=$request->validate([
+        'poctitle.*'=> 'required|string',    
+    
+        'poclink.*'=> 'required|string'
+    ]);
+
+    $add_campaignsCN=$request->validate([
+        'cntitle.*'=> 'required|string',    
+    
+        'cnlink.*'=> 'required|string'
+    ]);
+
+
+
+    $campaign_count=campaign::get()->COUNT();
+    $add_campaigns= campaign::create([
+        'campaign_number'=>'VBS_00'.$campaign_count+1,
+        'campaign_name'=>$add_campaigns['campaign_name'],
+        'client_name'=>'',
+        'campaign_status'=>'ACTIVE',
+        'campaign_status_message'=>''
+    
+     ]);
+
+
+     for($i=0; $i<count($add_campaignsAssets); $i++)
+     {        
+         $arrayassetname=$add_campaignsAssets['assettitle'][$i];
+         $arrayassetfile=$add_campaignsAssets['assetfile'][$i];
+          $add_campaignsasset= asset::create([
+             'asset_name'=>$arrayassetname,
+             'asset_white_paper'=>$arrayassetfile,
+            
+          ]);
+     
+     }
+         
+
+    for($i=0; $i<count($add_campaignsPocs); $i++)
+    {        
+        $arraypoctitle=$add_campaignsPocs['poctitle'][$i];
+        $arraypoclink=$add_campaignsPocs['poclink'][$i];
+         $add_campaignpoc= campaign_poc::create([
+            'campaign_id'=> $campaign_count+1,
+            'poc_title'=>$arraypoctitle,
+            'poc_link'=>$arraypoclink,
+           
+         ]);
+    
+    }
+
+    for($i=0; $i<count($add_campaignsCN); $i++)
+    {        
+        $arraycntitle=$add_campaignsCN['cntitle'][$i];
+        $arraycnlink=$add_campaignsCN['cnlink'][$i];
+         $add_campaigncn= client_newsletter_detail::create([
+            'campaign_id'=> $campaign_count+1,
+            'cn_title'=>$arraycntitle,
+            'cn_link'=>$arraycnlink,
+           
+         ]);
+    
+    }
+
+  
     return view('manager.add_campaign');
 }
 }
