@@ -92,30 +92,30 @@ public function add_campaign()
 public function store_campaign(Request $request)
 {
 
- 
+//  return dd($request->all());
+
     $add_campaigns=$request->validate([
         'campaign_name'=> 'required|string',
     ]);
 
     $add_campaignsAssets=$request->validate([
-        'assettitle.*'=> 'required|string',    
+        'assettitle.*'=> 'string',    
     
-        'assetfile.*'=> 'required|string'
+        'assetfile.*'=> 'file'
     ]);
 
 
-    $add_campaignsPocs=$request->validate([
-        'poctitle.*'=> 'required|string',    
+    // $add_campaignsPocs=$request->validate([
+    //     'poctitle.*'=> 'required|string',    
     
-        'poclink.*'=> 'required|string'
-    ]);
+    //     'poclink.*'=> 'required|string'
+    // ]);
 
-    $add_campaignsCN=$request->validate([
-        'cntitle.*'=> 'required|string',    
+    // $add_campaignsCN=$request->validate([
+    //     'cntitle.*'=> 'required|string',    
     
-        'cnlink.*'=> 'required|string'
-    ]);
-
+    //     'cnlink.*'=> 'required|string'
+    // ]);
 
 
     $campaign_count=campaign::get()->COUNT();
@@ -128,45 +128,64 @@ public function store_campaign(Request $request)
     
      ]);
 
-
-     for($i=0; $i<count($add_campaignsAssets); $i++)
+ 
+     for($i=0; $i<=count($add_campaignsAssets); $i++)
      {        
          $arrayassetname=$add_campaignsAssets['assettitle'][$i];
+
          $arrayassetfile=$add_campaignsAssets['assetfile'][$i];
-          $add_campaignsasset= asset::create([
-             'asset_name'=>$arrayassetname,
-             'asset_white_paper'=>$arrayassetfile,
+           
+            $allowedfileExtension=['html'];
+             
+
+            $filename = $arrayassetfile->getClientOriginalName();
+             $extension = $arrayassetfile->getClientOriginalExtension();
+            $check=in_array($extension,$allowedfileExtension);
+
+            if($check)
+            {
+          
+           
+            $arrayassetfile->store('public');
+            $add_campaignsasset= asset::create([
+                'asset_name'=>$arrayassetname,
+                'asset_white_paper'=>$filename,
+               
+             ]);
+            }
             
-          ]);
+            echo "Upload Successfully";
+            
+          
      
      }
          
 
-    for($i=0; $i<count($add_campaignsPocs); $i++)
-    {        
-        $arraypoctitle=$add_campaignsPocs['poctitle'][$i];
-        $arraypoclink=$add_campaignsPocs['poclink'][$i];
-         $add_campaignpoc= campaign_poc::create([
-            'campaign_id'=> $campaign_count+1,
-            'poc_title'=>$arraypoctitle,
-            'poc_link'=>$arraypoclink,
+    // for($i=0; $i<count($add_campaignsPocs); $i++)
+    // {        
+    //     $arraypoctitle=$add_campaignsPocs['poctitle'][$i];
+    //     $arraypoclink=$add_campaignsPocs['poclink'][$i];
+    //      $add_campaignpoc= campaign_poc::create([
+    //         'campaign_id'=> $campaign_count+1,
+    //         'poc_title'=>$arraypoctitle,
+    //         'poc_link'=>$arraypoclink,
            
-         ]);
+    //      ]);
     
-    }
+    // }
 
-    for($i=0; $i<count($add_campaignsCN); $i++)
-    {        
-        $arraycntitle=$add_campaignsCN['cntitle'][$i];
-        $arraycnlink=$add_campaignsCN['cnlink'][$i];
-         $add_campaigncn= client_newsletter_detail::create([
-            'campaign_id'=> $campaign_count+1,
-            'cn_title'=>$arraycntitle,
-            'cn_link'=>$arraycnlink,
+    // for($i=0; $i<count($add_campaignsCN); $i++)
+    // {        
+    //     $arraycntitle=$add_campaignsCN['cntitle'][$i];
+    //     $arraycnlink=$add_campaignsCN['cnlink'][$i];
+    //      $add_campaigncn= client_newsletter_detail::create([
+    //         'campaign_id'=> $campaign_count+1,
+    //         'cn_title'=>$arraycntitle,
+    //         'cn_link'=>$arraycnlink,
            
-         ]);
+    //      ]);
     
-    }
+    // }
 
   
     return view('manager.add_campaign');
