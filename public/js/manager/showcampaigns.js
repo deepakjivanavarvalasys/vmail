@@ -32,19 +32,11 @@ USER_TABLE = $('#table-users').DataTable({
 
             render: function (data, type, row) {
                 
-                    
-                    
-                 
-                    
-                    
-                
                 campaign_status=
                 '<div class="dropdown hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"><button class="dropbtn" style="color:#000;">'+
                 row.campaign_status+'</button><div class="dropdown-content"><a href="#">INACTIVE CAMPAIGN</a><a href="#">HOLD CAMPAIGN</a><a href="#">MARK AS COMPLETE</a></div></div>';
 
                 return campaign_status;
-
-
 
             }
             
