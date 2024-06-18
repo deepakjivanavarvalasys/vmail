@@ -20,7 +20,6 @@ class ManagerController extends Controller
     public function getusers(Request $request)
     {     
         
-        
         $search_data = $request->get('search');
         $searchValue = $search_data['value'];
         $order = $request->get('order');
@@ -105,17 +104,17 @@ public function store_campaign(Request $request)
     ]);
 
 
-    // $add_campaignsPocs=$request->validate([
-    //     'poctitle.*'=> 'required|string',    
+    $add_campaignsPocs=$request->validate([
+        'poctitle.*'=> 'required|string',    
     
-    //     'poclink.*'=> 'required|string'
-    // ]);
+        'poclink.*'=> 'required|string'
+    ]);
 
-    // $add_campaignsCN=$request->validate([
-    //     'cntitle.*'=> 'required|string',    
+    $add_campaignsCN=$request->validate([
+        'cntitle.*'=> 'required|string',    
     
-    //     'cnlink.*'=> 'required|string'
-    // ]);
+        'cnlink.*'=> 'required|string'
+    ]);
 
 
     $campaign_count=campaign::get()->COUNT();
@@ -137,7 +136,7 @@ public function store_campaign(Request $request)
            
             $allowedfileExtension=['html'];
              
-
+        
             $filename = $arrayassetfile->getClientOriginalName();
              $extension = $arrayassetfile->getClientOriginalExtension();
             $check=in_array($extension,$allowedfileExtension);
@@ -161,33 +160,102 @@ public function store_campaign(Request $request)
      }
          
 
-    // for($i=0; $i<count($add_campaignsPocs); $i++)
-    // {        
-    //     $arraypoctitle=$add_campaignsPocs['poctitle'][$i];
-    //     $arraypoclink=$add_campaignsPocs['poclink'][$i];
-    //      $add_campaignpoc= campaign_poc::create([
-    //         'campaign_id'=> $campaign_count+1,
-    //         'poc_title'=>$arraypoctitle,
-    //         'poc_link'=>$arraypoclink,
+    for($i=0; $i<count($add_campaignsPocs); $i++)
+    {        
+        $arraypoctitle=$add_campaignsPocs['poctitle'][$i];
+        $arraypoclink=$add_campaignsPocs['poclink'][$i];
+         $add_campaignpoc= campaign_poc::create([
+            'campaign_id'=> $campaign_count+1,
+            'poc_title'=>$arraypoctitle,
+            'poc_link'=>$arraypoclink,
            
-    //      ]);
+         ]);
     
-    // }
+    }
 
-    // for($i=0; $i<count($add_campaignsCN); $i++)
-    // {        
-    //     $arraycntitle=$add_campaignsCN['cntitle'][$i];
-    //     $arraycnlink=$add_campaignsCN['cnlink'][$i];
-    //      $add_campaigncn= client_newsletter_detail::create([
-    //         'campaign_id'=> $campaign_count+1,
-    //         'cn_title'=>$arraycntitle,
-    //         'cn_link'=>$arraycnlink,
+    for($i=0; $i<count($add_campaignsCN); $i++)
+    {        
+        $arraycntitle=$add_campaignsCN['cntitle'][$i];
+        $arraycnlink=$add_campaignsCN['cnlink'][$i];
+         $add_campaigncn= client_newsletter_detail::create([
+            'campaign_id'=> $campaign_count+1,
+            'cn_title'=>$arraycntitle,
+            'cn_link'=>$arraycnlink,
            
-    //      ]);
+         ]);
     
-    // }
-
-  
+    }
     return view('manager.add_campaign');
+}
+
+
+public function show_campaign()
+{
+    return view('manager.show_campaign');
+}
+
+
+public function getcampaign(Request $request)
+{
+    
+    // return dd($request->all());
+    $search_data = $request->get('search');
+    $searchValue = $search_data['value'];
+    $order = $request->get('order');
+    $draw = $request->get('draw');
+    $limit = $request->get("length"); // Rows display per page
+    $offset = $request->get("start");
+
+    $query = Campaign::query();
+    
+  
+    $totalRecords = $query->count();
+
+    //Search Data
+    if(isset($searchValue) && $searchValue != "") {
+        $query->where(function ($query) use($searchValue) {
+            $query->where("campaign_name", "like", "%$searchValue%");
+           
+        });
+    }
+    //Filters
+    if(!empty($filters)) {
+
+    }
+
+
+    //Order By
+    $orderColumn = null;
+    if ($request->has('order')){
+        $order = $request->get('order');
+        $orderColumn = $order[0]['column'];
+        $orderDirection = $order[0]['dir'];
+    }
+
+    switch ($orderColumn) {
+        case '0': $query->orderBy('created_at', $orderDirection); break;
+        case '1': $query->orderBy('campaign_name', $orderDirection); break;
+       
+    }
+
+    $totalFilterRecords = $query->count();
+    if($limit > 0) {
+        $query->offset($offset);
+        $query->limit($limit);
+    }
+
+    $result = $query->get();
+
+    //dd($result->toArray());
+    
+    $ajaxData = array(
+        "draw" => intval($draw),
+        "iTotalRecords" => $totalRecords,
+        "iTotalDisplayRecords" => $totalFilterRecords,
+        "aaData" => $result
+    );
+    
+    return response()->json($ajaxData);
+ 
 }
 }

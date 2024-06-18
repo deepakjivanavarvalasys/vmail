@@ -75,7 +75,7 @@
                     
                         <div class="dropdown-content">
                         <a href="{{Route('addCampaign')}}">Add Campaigns</a>
-                        <a href="#">Campaign Details</a>
+                        <a href="{{Route('showCampaign')}}">Campaign Details</a>
                         <a href="#">Campaign Data Details</a>
                         <a href="#">Campaign Data Import</a>
                         <a href="#">Download Unsubscribed</a>
