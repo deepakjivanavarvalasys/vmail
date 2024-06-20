@@ -189,16 +189,18 @@ public function store_campaign(Request $request)
 }
 
 
-public function show_campaign()
+public function show_campaign(Request $request)
 {
+
+    echo $request->status;
+
+    
     return view('manager.show_campaign');
 }
 
 
 public function getcampaign(Request $request)
 {
-    
-    // return dd($request->all());
     $search_data = $request->get('search');
     $searchValue = $search_data['value'];
     $order = $request->get('order');

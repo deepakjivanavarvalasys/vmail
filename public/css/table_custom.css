@@ -1,13 +1,15 @@
 
 .table tbody tr:hover {
-    -webkit-box-shadow: 0 5px 8px -6px grey;
+    -webkit-box-shadow: 0 5px 8px -6px rgb(63, 58, 58);
     -moz-box-shadow: 0 5px 8px -6px grey;
     box-shadow: 0 5px 8px -6px grey;
+    
 }
 .table td {
     padding: 3px 5px 3px 5px !important;
     vertical-align: middle !important;
     border: 2px solid #dad9d9 !important;
+    text-align: center;
     /* border-bottom: 2px solid #dad9d9 !important; */
 }
 .table tr td:first-child {
