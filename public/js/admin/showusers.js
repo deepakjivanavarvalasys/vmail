@@ -13,7 +13,7 @@ USER_TABLE = $('#table-users').DataTable({
     "processing": true,
     "serverSide": true,
     "ajax": {
-        "url": 'http://localhost/vmail_laravel/public/admin/getusers',
+        "url": URL + '/admin/getusers',
         data: {
 
         },

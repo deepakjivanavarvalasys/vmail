@@ -13,7 +13,9 @@ USER_TABLE = $('#table-users').DataTable({
     "processing": true,
     "serverSide": true,
     "ajax": {
-        "url": 'http://localhost/vmail_laravel/public/manager/getusers',
+        "url": URL+ '/manager/getusers',
+        
+
         data: {
 
         },

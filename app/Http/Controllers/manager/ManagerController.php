@@ -97,13 +97,14 @@ public function store_campaign(Request $request)
         'campaign_name'=> 'required|string',
     ]);
 
-    $add_campaignsAssets=$request->validate([
-        'assettitle.*'=> 'string',    
     
-        'assetfile.*'=> 'file'
+    $add_campaignsAssets=$request->validate([
+        'assettitle.*'=> 'required|string',    
+    
+        'assetfile.*'=> 'required|file'
     ]);
-
-
+    
+    
     $add_campaignsPocs=$request->validate([
         'poctitle.*'=> 'required|string',    
     
@@ -127,9 +128,10 @@ public function store_campaign(Request $request)
     
      ]);
 
- 
-     for($i=0; $i<=count($add_campaignsAssets); $i++)
+     
+     for($i=0; $i<count($add_campaignsAssets['assettitle']); $i++)
      {        
+        
          $arrayassetname=$add_campaignsAssets['assettitle'][$i];
 
          $arrayassetfile=$add_campaignsAssets['assetfile'][$i];
@@ -160,7 +162,7 @@ public function store_campaign(Request $request)
      }
          
 
-    for($i=0; $i<count($add_campaignsPocs); $i++)
+    for($i=0; $i<count($add_campaignsPocs['poctitle']); $i++)
     {        
         $arraypoctitle=$add_campaignsPocs['poctitle'][$i];
         $arraypoclink=$add_campaignsPocs['poclink'][$i];
@@ -173,7 +175,7 @@ public function store_campaign(Request $request)
     
     }
 
-    for($i=0; $i<count($add_campaignsCN); $i++)
+    for($i=0; $i<count($add_campaignsCN['cntitle']); $i++)
     {        
         $arraycntitle=$add_campaignsCN['cntitle'][$i];
         $arraycnlink=$add_campaignsCN['cnlink'][$i];

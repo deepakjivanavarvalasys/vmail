@@ -1,42 +1,47 @@
 
 
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-    
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="add_roles">
-                        @csrf
-                    <input type="text" name="role_name" placeholder="Enter Role Name">
-                    @error('role_name')
-                    <div class="alert-warning">Enter Role Name</div>
-                    @enderror
-                    <select name="role_status">
-                    <option value='1'>Active</option>
-                    <option value='0'>Inactive</option>
-                    
-                    </select>
-                  
-
-                    <input class="btn btn-primary" type="submit" name="submit">
-                    
-                    
-                    
-                    
-                    
-                    </form>
-                    
-                    
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+           <div class="row">
+              <div class="col-lg-12">
+                <div class="iq-card">
+                    <div class="iq-card-header d-flex justify-content-between">
+                        <div class="iq-header-title">
+                            <h4 class="card-title">Add New Role</h4>
+                        </div>
+                    </div>
+                    <div class="iq-card-body">
+                        <div class="new-user-info">
+                            <form method="POST" action="{{ route('store_roles') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="rname">Role Name:</label>
+                                    <input type="text" class="form-control" name="role_name" value="{{old('name')}}" id="rname" placeholder="Enter Role Name" required autofocus autocomplete="role_name">
+                                    @error('role_name')
+                                        <div class="alert-warning">Enter Role Name</div>
+                                    @enderror
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                    <label>Role Status:</label>
+                                    <select class="form-control" id="role_status" name="role_status">
+                                        <option>Select Role Status</option>
+                                        <option value='1'>Active</option>
+                                    <option value='0'>Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-primary">Add New Role</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+              </div>
+           </div>
         </div>
-    </div>
-
+     </div>
 </x-app-layout>
 
